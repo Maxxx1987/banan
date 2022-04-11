@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if section %}
+        <h2>{{section.title}} ({{section.products.count}})</h2>
+    {% elif brand %}
+        <h2>{{brand.title}} ({{brand.product_set.count}})</h2>
+    {% endif %}
+
+    <ul>
+        {% for product in product_list %}
+            <li>
+                <a href="{{ product.get_absolut_url }}">{{product.title}}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% include 'pagination.html' %}
+{% endblock %}

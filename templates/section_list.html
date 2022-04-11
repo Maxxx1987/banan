@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{{category.title}} ({{category.section_set.count}})</h2>
+
+    {% for section in section_list %}
+        <a href="{{ section.get_absolut_url }}" >{{section.title}}</a>
+    {% endfor %}
+{% endblock %}

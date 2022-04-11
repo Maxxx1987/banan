@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for category in category_list %}
+        <a href="{{ category.get_absolut_url }}" >{{category.title}}</a>
+    {% endfor %}
+{% endblock %}

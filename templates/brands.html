@@ -1,0 +1,8 @@
+<h2>Наши брэнды:</h2>
+<ul>
+    {% for brand in brands %}
+        <li>
+            <a href="/products/?brand={{ brand.id }}">{{ brand.title }}</a>
+        </li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,14 @@
+{% load catalog %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<a href="/">Главная</a><br>
+{% brands %}
+{% block content %}{% endblock %}
+</body>
+</html>
