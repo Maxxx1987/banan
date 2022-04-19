@@ -6,7 +6,11 @@
 
 <img src="/media/{{ product.image }}" alt="{{ product.title }}" width="200" height="120">
 <br>
-Цена {{ product.price }}
+{% if product.base_price == product.price %}
+    Цена <h2>{{ product.price }}</h2>
+{% else %}
+    Цена <h2><s>{{ product.base_price }}</s> {{ product.price }}</h2>
+{% endif %}
 <br>
 Описание {{ product.description }}
 <br>

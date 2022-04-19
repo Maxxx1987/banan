@@ -19,11 +19,14 @@ from django.conf.urls.static import static
 from django.urls import path, include
 
 from apps.catalog.views import IndexView
+from apps.products.views import EventListView, EventDetailView
 
 urlpatterns = [
     path('', IndexView.as_view(), name='home'),
     path('admin/', admin.site.urls),
     path('catalog/', include('apps.catalog.urls')),
     path('products/', include('apps.products.urls')),
+    path('events/', EventListView.as_view()),
+    path('events/<int:pk>/', EventDetailView.as_view())
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

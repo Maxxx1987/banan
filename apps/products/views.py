@@ -1,7 +1,7 @@
 from django.views.generic import ListView, DetailView
 
 from apps.catalog.models import Section
-from apps.products.models import Product, Brand
+from apps.products.models import Product, Brand, Event
 
 
 class ProductListView(ListView):
@@ -33,3 +33,16 @@ class ProductDetailView(DetailView):
 class BrandListView(ListView):
     model = Brand
     template_name = 'category_list.html'
+
+
+class EventListView(ListView):
+    model = Event
+    template_name = 'event_list.html'
+    paginate_by = 5
+
+
+class EventDetailView(DetailView):
+    model = Event
+    template_name = 'event_detail.html'
+
+
