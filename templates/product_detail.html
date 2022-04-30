@@ -12,6 +12,13 @@
     Цена <h2><s>{{ product.base_price }}</s> {{ product.price }}</h2>
 {% endif %}
 <br>
+<!--{% for productstore in product.productstore_set.all %}-->
+<!--    В <b>{{ productstore.store.title }}</b>{% if not productstore.is_stock %} нет{% endif %} в наличии {% if productstore.is_stock %}{{ productstore.amount }}{% endif %}<br>-->
+<!--{% endfor %}-->
+
+В Магазине {% if not productstore_shop.is_stock %} нет{% endif %} в наличии {% if productstore_shop.is_stock %}{{ productstore_shop.amount }}{% endif %}<br>
+На Складе {% if not productstore_sklad.is_stock %} нет{% endif %} в наличии {% if productstore_sklad.is_stock %}{{ productstore_sklad.amount }}{% endif %}<br>
+<br>
 Описание {{ product.description }}
 <br>
 <hr>
@@ -20,5 +27,14 @@
         <li><b>{{ pp.property }}</b>: {{ pp.value }}</li>
     {% endfor %}
 </ul>
-
+{% if order_form %}
+    <form action="/order/" method="POST">
+        {% csrf_token %}
+        {{ order_form.as_p }}
+        <input type="submit" value="В корзину">
+    </form>
+{% else %}
+	<a href="/order/list/">Перейти в корзину</a>
+{% endif %}
+<br>
 {% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Заказ{% if identifier %} № {{ identifier }}{% endif %}</h2>
+
+{% if productorder_list %}
+    Сумма {{ order_sum }}
+{% endif %}
+
+<hr>
+
+{% for productorder in productorder_list %}
+    {{ productorder.product.title }} - {{ productorder.product.price }} руб.<br>
+    <form action="/order/{{ productorder.id }}/update/" method="POST">
+        {% csrf_token %}
+
+        {{ productorder.form.as_p }}
+
+        <input type="submit" value="Изменить">
+    </form>
+    <form action="/order/{{ productorder.id }}/delete/" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Удалить из корзины">
+    </form>
+    <br><hr><br>
+{% empty %}
+    В корзине нет товаров
+{% endfor %}
+
+{% endblock %}

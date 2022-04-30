@@ -1,7 +1,9 @@
 from django.views.generic import ListView, DetailView
 
 from apps.catalog.models import Section
-from apps.products.models import Product, Brand, Event
+from apps.payments.forms import ProductOrderForm
+from apps.payments.models import ProductOrder
+from apps.products.models import Product, Brand, Event, ProductStore
 
 
 class ProductListView(ListView):
@@ -28,6 +30,29 @@ class ProductListView(ListView):
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'product_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+
+        params = {
+            'product': self.object,
+        }
+        if self.request.user.is_authenticated:
+            params['order__user'] = self.request.user
+        else:
+            params['order__session_key'] = self.request.session.session_key
+
+        p_order = ProductOrder.objects.filter(**params).first()
+        if not p_order:
+            context['order_form'] = ProductOrderForm(initial={'product': self.object.id})
+
+        # shop = Store.objects.get(title="Магазин")
+        # context['productstore'] = ProductStore.objects.filter(product=self.object, store=shop)
+
+        context['productstore_shop'] = ProductStore.objects.filter(product=self.object, store__title="Магазин").first()
+        context['productstore_sklad'] = ProductStore.objects.filter(product=self.object, store__title="Склад").first()
+
+        return context
 
 
 class BrandListView(ListView):

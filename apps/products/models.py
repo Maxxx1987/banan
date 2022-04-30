@@ -1,5 +1,4 @@
 import datetime
-
 from autoslug import AutoSlugField
 from django.db import models
 
@@ -58,7 +57,7 @@ class Product(models.Model):
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
 
-    def get_absolut_url(self):
+    def get_absolute_url(self):
         return f'/products/{self.pk}/'
 
 
@@ -77,6 +76,10 @@ class ProductProperty(models.Model):
     product = models.ForeignKey('products.Product',on_delete=models.CASCADE)
     property = models.ForeignKey('products.Property',on_delete=models.CASCADE)
     value = models.CharField('Значение', max_length=255)
+
+    class Meta:
+        verbose_name = 'Характеристики товара'
+        verbose_name_plural = 'Характеристики товара'
 
 
 class Event(models.Model):
@@ -103,3 +106,35 @@ class Event(models.Model):
 class CategoryEvent(models.Model):
     category = models.ForeignKey('catalog.Category', on_delete=models.CASCADE)
     event = models.ForeignKey('products.Event', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.event
+
+    class Meta:
+        verbose_name = 'Акция на группу товаров'
+        verbose_name_plural = 'Акция на группу товаров'
+
+
+class Store(models.Model):
+    title = models.CharField('Название', max_length=255)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Магазин'
+        verbose_name_plural = 'Магазины'
+
+
+class ProductStore(models.Model):
+    product = models.ForeignKey('products.Product',on_delete=models.CASCADE)
+    store = models.ForeignKey('products.Store',on_delete=models.CASCADE)
+    amount = models.IntegerField('Количество', default=0)
+
+    class Meta:
+        verbose_name = 'Наличие товара'
+        verbose_name_plural = 'Наличие товара'
+
+    def is_stock(self):
+        return self.amount > 0
+

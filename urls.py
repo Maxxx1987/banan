@@ -27,6 +27,7 @@ urlpatterns = [
     path('catalog/', include('apps.catalog.urls')),
     path('products/', include('apps.products.urls')),
     path('events/', EventListView.as_view()),
-    path('events/<int:pk>/', EventDetailView.as_view())
+    path('events/<int:pk>/', EventDetailView.as_view()),
+    path('order/', include('apps.payments.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

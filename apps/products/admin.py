@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.products.models import Product, Brand, Property, ProductProperty, Event, CategoryEvent
+from apps.products.models import Product, Brand, Property, ProductProperty, Event, CategoryEvent, Store, ProductStore
 from apps.products.forms import EventAdminForm
 
 
@@ -34,5 +34,15 @@ class EventAdmin(admin.ModelAdmin):
 @admin.register(CategoryEvent)
 class CategoryEventAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(Store)
+class StoreAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(ProductStore)
+class ProductStoreAdmin(admin.ModelAdmin):
+    list_display = ('product', 'store', 'amount')
 
 
