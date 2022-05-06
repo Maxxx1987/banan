@@ -18,6 +18,7 @@
 
 В Магазине {% if not productstore_shop.is_stock %} нет{% endif %} в наличии {% if productstore_shop.is_stock %}{{ productstore_shop.amount }}{% endif %}<br>
 На Складе {% if not productstore_sklad.is_stock %} нет{% endif %} в наличии {% if productstore_sklad.is_stock %}{{ productstore_sklad.amount }}{% endif %}<br>
+Общее количество {{ product.total_quantity }}<br>
 <br>
 Описание {{ product.description }}
 <br>
@@ -28,11 +29,15 @@
     {% endfor %}
 </ul>
 {% if order_form %}
-    <form action="/order/" method="POST">
-        {% csrf_token %}
-        {{ order_form.as_p }}
-        <input type="submit" value="В корзину">
-    </form>
+    {% if productstore_shop.is_stock or productstore_sklad.is_stock %}
+        <form action="/order/" method="POST">
+            {% csrf_token %}
+            {{ order_form.as_p }}
+            <input type="submit" value="В корзину">
+        </form>
+    {% else %}
+        <a href="/order/list/">Перейти в корзину</a>
+    {% endif %}
 {% else %}
 	<a href="/order/list/">Перейти в корзину</a>
 {% endif %}

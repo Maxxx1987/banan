@@ -1,5 +1,6 @@
 from django import forms
 from apps.payments.models import ProductOrder
+from apps.products.models import ProductStore
 
 
 class ProductOrderForm(forms.ModelForm):
@@ -14,6 +15,13 @@ class ProductOrderForm(forms.ModelForm):
 
 
 class ProductOrderUpdateForm(forms.ModelForm):
+
+    def clean(self):
+        cleaned_data = super().clean()
+        product = cleaned_data['product']
+        if cleaned_data['count'] > product.total_quantity:
+            raise forms.ValidationError(f'очень много. Нельзя больше {product.total_quantity}')
+        return cleaned_data
 
     class Meta:
         model = ProductOrder

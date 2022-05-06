@@ -1,6 +1,7 @@
 import datetime
 from autoslug import AutoSlugField
 from django.db import models
+from django.db.models import Sum
 
 
 class Brand(models.Model):
@@ -49,6 +50,11 @@ class Product(models.Model):
             price = int(self._price * (100 - sale) / 100)
 
         return price
+
+    @property
+    def total_quantity(self):
+        agg = ProductStore.objects.filter(product=self.id).aggregate(total_quantity=Sum('amount'))
+        return agg['total_quantity']
 
     def __str__(self):
         return self.title
@@ -137,4 +143,3 @@ class ProductStore(models.Model):
 
     def is_stock(self):
         return self.amount > 0
-

@@ -4,7 +4,7 @@ from apps.catalog.views import CategoryListView, SectionListView
 from apps.products.views import ProductListView
 
 urlpatterns = [
-    path('', CategoryListView.as_view()),
+    path('', CategoryListView.as_view(), name='categories'),
     path('<slug:slug>/', SectionListView.as_view()),
     path('<slug:cat_slug>/<slug:slug>/', ProductListView.as_view())
 ]

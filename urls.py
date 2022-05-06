@@ -18,12 +18,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, include
 
-from apps.catalog.views import IndexView
+from apps.catalog.views import IndexView, RegisterUser, LoginUser, logout_user
 from apps.products.views import EventListView, EventDetailView
 
 urlpatterns = [
     path('', IndexView.as_view(), name='home'),
     path('admin/', admin.site.urls),
+    path('register/', RegisterUser.as_view(), name='register'),
+    path('login/', LoginUser.as_view(), name='login'),
+    path('logout/', logout_user, name='logout'),
     path('catalog/', include('apps.catalog.urls')),
     path('products/', include('apps.products.urls')),
     path('events/', EventListView.as_view()),

@@ -8,6 +8,12 @@
 </head>
 <body>
 <a href="/">Главная</a><br>
+{% if request.user.is_authenticated %}
+{{user.username}}|<a href="{% url 'logout' %}">Выйти</a>
+{% else %}
+<a href="{% url 'register' %}">Регистрация</a>|<a href="{% url 'login' %}">Войти</a>
+{% endif %}<br>
+<a href="/order/list/">Корзина</a><br>
 {% brands %}
 <a href="/events/">Акции</a><br>
 {% block content %}{% endblock %}

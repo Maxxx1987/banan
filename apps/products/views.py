@@ -51,7 +51,6 @@ class ProductDetailView(DetailView):
 
         context['productstore_shop'] = ProductStore.objects.filter(product=self.object, store__title="Магазин").first()
         context['productstore_sklad'] = ProductStore.objects.filter(product=self.object, store__title="Склад").first()
-
         return context
 
 
